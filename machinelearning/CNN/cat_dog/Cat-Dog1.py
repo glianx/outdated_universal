@@ -69,7 +69,7 @@ ic(y)
 # =============================================================
 
 #save images
-
+'''
 import pickle
 
 pickle_out = open("X.pickle","wb")
@@ -85,7 +85,7 @@ X = pickle.load(pickle_in)
 
 pickle_in = open("y.pickle","rb")
 y = pickle.load(pickle_in)
-
+'''
 # =============================================================
 
 import tensorflow as tf
@@ -278,11 +278,11 @@ for metric in ('accuracy','precision','recall','loss'):
     plt.legend(['train', 'test'], loc='upper left')
     plt.show()
 '''
-# summarize history for precision
-plt.plot(history.history['precision'])
-plt.plot(history.history['val_precision'])
-plt.title('model precision')
-plt.ylabel('precision')
+# summarize history for accuracy
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()

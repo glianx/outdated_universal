@@ -4,7 +4,6 @@ def factorial(n):
         ic(n)
         return 1
     else:
-        x = factorial(n-1)
-        ic(n,x,n*x)
-        return n * x
+        ic(n)
+        return n * factorial(n-1)
 print(factorial(5))
