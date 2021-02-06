@@ -94,7 +94,7 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten
 from tensorflow.keras.layers import Conv2D, MaxPooling2D
-import pickle
+#import pickle
 import time
 
 NAME = "Cats-vs-dogs-CNN"
