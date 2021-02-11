@@ -13,7 +13,7 @@ import tensorflow as tf
 dirname = os.path.dirname(__file__)
 TRAIN_DIR = os.path.join(dirname, "PetImages/Train/")
 
-CATEGORIES = ["Dog", "Cat"]
+CATEGORIES = ["Cat","Dog"] #Cat = 0 (negative), Dog = 1 (positive)
 
 #Image processing
 
@@ -134,10 +134,10 @@ history = model.fit(np.array(X), np.array(y),batch_size=32,epochs=epochs,validat
 
 
 #saving model
-#model.save('/Users/gordon/Downloads/TensorflowCNN')
+#model.save('/Users/gordon/Downloads/Cat-Dog1')
 #loading model
 from tensorflow import keras
-#model = keras.models.load_model('/Users/gordon/Downloads/TensorflowCNN')
+#model = keras.models.load_model('/Users/gordon/Downloads/Cat-Dog1')
 
  
 # =============================================================
@@ -148,7 +148,7 @@ from tensorflow import keras
 dirname = os.path.dirname(__file__)
 test_dir = os.path.join(dirname, 'PetImages/Test')
 
-pet_li = ['Dog','Cat']
+pet_li = ['Cat','Dog']
 dog_predictions, dog_actual, cat_predictions, cat_actual, true_positives,\
 true_negatives, false_positives, false_negatives = [0 for x in range(8)]
 right,wrong = 0,0
@@ -268,16 +268,6 @@ import numpy
 ic(model.predict(X_test[:10]))
 ic(y_test[:10])
 
-for metric in ('accuracy','precision','recall','loss'):
-    ic(metric,'val_' + metric,'model ' + metric)
-    plt.plot(history.history[metric]) #i.e. ['accuracy']
-    plt.plot(history.history['val_' + metric]) #i.e.['val_accuracy']
-    plt.title('model ' + metric) #i.e. 'model accuracy'
-    plt.ylabel(metric) #i.e. 'accuracy'
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
-    plt.show()
-'''
 # summarize history for accuracy
 plt.plot(history.history['accuracy'])
 plt.plot(history.history['val_accuracy'])
@@ -286,7 +276,6 @@ plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
-'''
 
 from sklearn.metrics import average_precision_score
 average_precision = average_precision_score(y_test, y_score)
