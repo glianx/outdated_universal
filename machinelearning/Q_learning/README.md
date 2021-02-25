@@ -1,3 +1,5 @@
+![Alt Text](machinelearning/Q_learning/qlearning.png)
+
 The Q learning algorithm has 2 versions - terminal and fire. The fire version allows you to edit the maze in a graphical user interface
 (python turtle), which makes the maze-making far easier. You can click on squares/states to give a negative reward when the agent moves into that 
 square/state. This is like setting the square on fire. 
