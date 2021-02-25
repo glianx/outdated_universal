@@ -25,24 +25,6 @@ def activate(weights, inputs):
 		activation += weights[i] * inputs[i]
 	return activation
 
-# Alternate method
-def activate2(weights, inputs):
-    a = 0
-    for weight,input_val in zip(weights,inputs):
-        a += weight * input_val
-    a += weights[-1]
-    return(a)
-
-# Alternate method 
-def activate3(weights, inputs):
-    a = 0
-    inputs.append(1)
-    ic(weights,inputs)
-    for weight,input_val in zip(weights,inputs):
-        a += weight * input_val
-    return(a)
-
-
 # Transfer neuron activation
 def transfer(activation):
 	return 1.0 / (1.0 + exp(-activation))
@@ -76,82 +58,34 @@ def transfer_derivative(output):
 
 # Backpropagate error and store in neurons
 def backward_propagate_error(network, expected):
-	for layer in network:
-		for neuron in layer:
-			neuron['delta'] = 1
-	ic(network)
-	# for i in reversed(range(len(network))): #1,0
-	# 	layer = network[i]
-	# 	errors = list()
-    #     #output layer
-	# 	if i == len(network)-1: 
-    #         #iterate through neurons
-	# 		for j in range(len(layer)):
-	# 			neuron = layer[j]
-    #             #error = update change required
-	# 			errors.append(expected[j] - neuron['output'])
-    #     #hidden layer
-	# 	else: 
-    #         #iterate through neurons
-	# 		for j in range(len(layer)):
-	# 			error = 0.0
-    #             #iterate through neurons in following layer
-	# 			for neuron in network[i + 1]:
-    #                 #error = weight * update change
-	# 				error += (neuron['weights'][j] * neuron['delta'])
-	# 			errors.append(error)
-    #     #assign blame to neurons, store update change as 'delta'
-	# 	for j in range(len(layer)):
-	# 		neuron = layer[j]
-	# 		neuron['delta'] = errors[j] * transfer_derivative(neuron['output'])
-
-def backward_propagate_error2(network2,expected):
-	for layer in network2:
-		for neuron in layer:
-			neuron['delta'] = 2
-	ic(network2)
-    # for i,layer in reversed(list(enumerate(network))):
-    #     errors = []
-    #     #output layer
-    #     if i == len(network)-1:
-    #         for j,neuron in enumerate(layer):
-    #             errors.append(expected[j] - neuron['output'])
-    #     #hidden layer
-    #     else:
-    #         for k in range(len(layer)):
-    #             error = 0
-    #             for neuron in network[i+1]:
-    #                 error += neuron['weights'][k] * neuron['delta']
-    #             errors.append(error)
-    #     for neuron,error in zip(layer,errors):
-    #         neuron['delta'] = error * transfer_derivative(neuron['output'])
+	for i in reversed(range(len(network))): #1,0
+		layer = network[i]
+		errors = list()
+		if i != len(network)-1:
+			for j in range(len(layer)):
+				error = 0.0
+				for neuron in network[i + 1]:
+					error += (neuron['weights'][j] * neuron['delta'])
+				errors.append(error)
+		else:
+			for j in range(len(layer)):
+				neuron = layer[j]
+				errors.append(expected[j] - neuron['output'])
+		for j in range(len(layer)):
+			neuron = layer[j]
+			neuron['delta'] = errors[j] * transfer_derivative(neuron['output'])
 
 # test backpropagation of error
-network1 = [[{'output': 0.7105668883115941, 'weights': [0.13436424411240122, 0.8474337369372327, 0.763774618976614]}],
-		[{'output': 0.6213859615555266, 'weights': [0.2550690257394217, 0.49543508709194095]}, 
-        {'output': 0.6573693455986976, 'weights': [0.4494910647887381, 0.651592972722763]}]]
-network2 = network1.copy()
+network = [[{'output': 0.7105668883115941, 'weights': [0.13436424411240122, 0.8474337369372327, 0.763774618976614]}],
+		[{'output': 0.6213859615555266, 'weights': [0.2550690257394217, 0.49543508709194095]}, {'output': 0.6573693455986976, 'weights': [0.4494910647887381, 0.651592972722763]}]]
 expected = [0, 1]
-ic(network1 == network2)
-backward_propagate_error(network1,expected)
-for layer in network1:
-	for neuron in layer:
-		ic(neuron['delta'])
-for layer in network2:
-	for neuron in layer:
-		ic(neuron['delta'])
-ic(network1 == network2)
-backward_propagate_error2(network2, expected)
-ic(network1 == network2)
-
-for layer, layer2 in zip(network1,network2):
-    for neuron,neuron2 in zip(layer,layer2):
-        ic(neuron['delta'],neuron2['delta'])
+backward_propagate_error(network, expected)
 
 print()
 
 for layer in network:
 	ic(layer)
+	ic(type(layer))
 
 # Update network weights with error
 def update_weights(network, row, l_rate):
