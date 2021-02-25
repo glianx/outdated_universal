@@ -24,7 +24,7 @@ fire_rwd = -20
 gold_rwd = 10
 end_rwd = 100
 
-n = 4
+n = 6
 class Square:
     def __init__(self, x, y, fillcolor, rwd, num):
         self.x = x - 5*side
