@@ -1,3 +1,4 @@
+#works very successfully
 import matplotlib.pyplot as plt
 from tensorflow import keras
 #import keras_metrics
@@ -134,10 +135,10 @@ history = model.fit(np.array(X), np.array(y),batch_size=32,epochs=epochs,validat
 
 
 #saving model
-#model.save('/Users/gordon/Downloads/Cat-Dog1')
+#model.save(os.path.join(dirname,'Cat-Dog1'))
 #loading model
 from tensorflow import keras
-#model = keras.models.load_model('/Users/gordon/Downloads/Cat-Dog1')
+#model = keras.models.load_model(os.path.join(dirname,'Cat-Dog1'))
 
  
 # =============================================================
