@@ -1,4 +1,5 @@
 Here is my CNN source code. I'd recommend looking at the cat_dog folder and running Cat-Dog1.py
+
 It's the one I've worked on the most and is the best one.
 
 The Convolutional Neural Networks uses 2 Convolutional and Max pooling layers to detect high-level features such as edges and curves,

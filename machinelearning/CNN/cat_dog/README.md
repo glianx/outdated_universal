@@ -8,51 +8,51 @@ https://www.kaggle.com/c/dogs-vs-cats/data
 
 create folders that look like this:
 
---PetImages
+    --PetImages
 
-    --Train
+        --Train
 
-        --Cat
+            --Cat
 
-            --0.jpg
+                --0.jpg
 
-            --1.jpg
+                --1.jpg
 
-            --2.jpg
+                --2.jpg
 
-         ...--12400.jpg
+            ...--12400.jpg
 
-        --Dog
+            --Dog
 
-            --0.jpg
+                --0.jpg
 
-            --1.jpg
-            
-            --2.jpg
+                --1.jpg
+                
+                --2.jpg
 
-         ...--12400.jpg
+            ...--12400.jpg
 
-    --Test
+        --Test
 
-        --Cat
+            --Cat
 
-            --12401.jpg
+                --12401.jpg
 
-            --12402.jpg
+                --12402.jpg
 
-            --12403.jpg
+                --12403.jpg
 
-         ...--12499.jpg
+            ...--12499.jpg
 
-        --Dog
+            --Dog
 
-            --12401.jpg
+                --12401.jpg
 
-            --12402.jpg
+                --12402.jpg
 
-            --12403.jpg
+                --12403.jpg
 
-         ...--12499.jpg
+            ...--12499.jpg
 
 
 And put PetImages in the same folder as Cat-Dog1.py
