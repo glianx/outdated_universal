@@ -1,5 +1,6 @@
 #works very successfully
 #from https://gist.github.com/fchollet/0830affa1f7f19fd47b06d4cf89ed44d 
+import keras
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
@@ -15,7 +16,7 @@ validation_data_dir = os.path.join(os.path.dirname(__file__),'PetImages/Test')
 
 nb_train_samples = 11000
 nb_validation_samples = 150
-epochs = 1
+epochs = 3
 batch_size = 32
 
 if K.image_data_format() == 'channels_first':
@@ -100,39 +101,59 @@ right, wrong = 0,0
 ic(type(train_generator))
 ic(train_generator) 
 
+X_test = []
+y_test = []
 
-#predictions = model.predict(validation_generator[:10])
-#labels = validation_generator[:10]
+CATEGORIES = ['cat','dog']
 
-try:
-    ic(model.predict(validation_data_dir[:10]))
-except:
-    ic()
-try:
-    ic(model.predict(test_datagen[:10]))
-except:
-     ic()
-try:
-    ic(model.predict(validation_generator[:10]))
-except: 
-    ic()
-'''
-ic(predictions.shape)
-ic(predictions)
+for i in CATEGORIES:
+    for img_name in os.listdir(os.path.join(validation_data_dir,i)):
+        img = keras.preprocessing.image.load_img(
+            os.path.join(test_dir,i,img_name), target_size=(img_width,img_height), color_mode='grayscale'
+        )
 
-ic(labels.shape)
-ic(labels)
+        img_array = keras.preprocessing.image.img_to_array(img)
+        img_array = tf.expand_dims(img_array, 0)  # Create batch axis
+        X_test.append(img_array)
+        y_test.append(CATEGORIES.index(i))
+        
+ic(type(X_test),type(y_test))
 
-for prediction,label in zip(predictions,labels):
-    #ic(prediction)
-    a = np.argmax(prediction)
-    b = np.argmax(label)
-    ic(np.argmax(prediction),np.argmax(label),a==b)
-    if np.argmax(prediction) == np.argmax(label):
-        right += 1
-    else:
-        wrong += 1
-ic(right,wrong,right/(right+wrong))
-'''
+X_test = np.array(X_test)
 
-    
+ic(type(X_test),type(y_test),X_test.shape)
+
+X_test = np.array(X_test).reshape(-1, IMG_SIZE, IMG_SIZE, 1)
+X_test = X_test/255.0
+y_test = np.array(y_test)
+
+ic(type(X_test),type(y_test),X_test.shape,y_test.shape)
+
+evaluation = model.evaluate(X_test, y_test, batch_size = 32)
+print("Test loss:", evaluation[0])
+print("Test accuracy:", evaluation[1])
+
+# Visualize training history
+from keras.models import Sequential
+from keras.layers import Dense
+import matplotlib.pyplot as plt
+import numpy
+
+ic(model.predict(X_test[:10]))
+ic(y_test[:10])
+
+# summarize history for accuracy
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.show()
+
+
+from sklearn.metrics import average_precision_score
+average_precision = average_precision_score(y_test, y_score)
+
+print('Average precision-recall score: {0:0.2f}'.format(
+    average_precision))

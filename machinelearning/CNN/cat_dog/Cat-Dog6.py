@@ -1,4 +1,5 @@
 #image classification from scratch - keras example
+#works ok, sometime corrupt images
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
