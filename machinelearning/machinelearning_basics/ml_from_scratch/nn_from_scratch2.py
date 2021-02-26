@@ -24,6 +24,23 @@ def activate(weights, inputs):
 		activation += weights[i] * inputs[i]
 	return activation
 
+# Alternate method
+def activate2(weights, inputs):
+	a = 0
+	for weight,input_val in zip(weights,inputs):
+		a += weight * input_val
+	a += weights[-1]
+	return(a)
+
+# Alternate method 
+def activate3(weights, inputs):
+	a = 0
+	inputs.append(1)
+	ic(weights,inputs)
+	for weight,input_val in zip(weights,inputs):
+		a += weight * input_val
+	return(a)
+
 # Transfer neuron activation
 def transfer(activation):
 	return 1.0 / (1.0 + exp(-activation))
@@ -72,7 +89,6 @@ def backward_propagate_error(network,expected):
 				errors.append(error)
 		for neuron,error in zip(layer,errors):
 			neuron['delta'] = error * transfer_derivative(neuron['output'])
-
 
 # test backpropagation of error
 network = [[{'output': 0.7105668883115941, 'weights': [0.13436424411240122, 0.8474337369372327, 0.763774618976614]}],
