@@ -6,7 +6,7 @@ Rubik's Cube Simulator + Solver!
 
 Minesweeper - with a floodfill recursive algorithm!
 
-![Alt Text](https://thumbs.gfycat.com/AbleAcidicArabianhorse-max-1mb.gif)
+![Alt Text](https://upload.wikimedia.org/wikipedia/commons/e/e5/Gospers_glider_gun.gif)
 
 Conway's Game of Life - a really cool simulation
 
