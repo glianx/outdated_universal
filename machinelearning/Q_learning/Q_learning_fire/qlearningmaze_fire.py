@@ -158,9 +158,7 @@ def get_poss_next_states(s, F, ns):
 def get_rnd_next_state(s, F, ns):
   # given a state s, pick a feasible next state
   poss_next_states = get_poss_next_states(s, F, ns)
-  next_state = \
-    poss_next_states[np.random.randint(0,\
-    len(poss_next_states))]
+  next_state = random.choice(poss_next_states)
   return next_state 
 
 
