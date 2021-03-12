@@ -5,7 +5,7 @@ from icecream import ic
 
 # Initialize a network
 def initialize_network(n_inputs, n_hidden, n_outputs):
-	network = list()
+	network = []
 	hidden_layer = [{'weights':[random() for i in range(n_inputs + 1)]} for i in range(n_hidden)]
 	network.append(hidden_layer)
 	output_layer = [{'weights':[random() for i in range(n_hidden + 1)]} for i in range(n_outputs)]
@@ -48,10 +48,11 @@ def transfer(activation):
 # Forward propagate input to a network output
 def forward_propagate(network, row):  
 	inputs = row #[1, 0, None]
-	for layer in network: #list [{'weights': [0.25, 0.49]},{'weights': [0.44, 0.65]}]
+	for layer in network: 
 		new_inputs = []
-		for neuron in layer: #dict {'weights': [0.25, 0.49]}
-			#activate input neurons/ outputs from hidden layer
+		#hidden + output layers
+		for neuron in layer:
+			#output = sig(weights * inputs + bias)
 			activation = activate(neuron['weights'], inputs) 
 			neuron['output'] = transfer(activation) 
 			new_inputs.append(neuron['output']) 
@@ -96,35 +97,40 @@ network = [[{'output': 0.7105668883115941, 'weights': [0.13436424411240122, 0.84
 expected = [0, 1]
 backward_propagate_error(network, expected)
 
-print()
-
-for layer in network:
-	ic(layer)
-	ic(type(layer))
-
 # Update network weights with error
 def update_weights(network, row, l_rate):
 	for i in range(len(network)):
-		inputs = row[:-1]
+		inputs = row[:-1] 
 		if i != 0:
 			inputs = [neuron['output'] for neuron in network[i - 1]]
 		for neuron in network[i]:
 			for j in range(len(inputs)):
+				#neuron weights updates by l_rate * delta * input
 				neuron['weights'][j] += l_rate * neuron['delta'] * inputs[j]
+			#neuron bias updates by l_rate * delta 
 			neuron['weights'][-1] += l_rate * neuron['delta']
 
-# Train a network for a fixed number of epochs
+from tqdm import trange
+from tqdm import tqdm
+
+# Train a network for a fixed number of epochs 1
 def train_network(network, train, l_rate, n_epoch, n_outputs):
 	for epoch in range(n_epoch):
-		sum_error = 0
+		sum_squared_error = 0
+		#iterate through rows in training dataset
 		for row in train:
 			outputs = forward_propagate(network, row)
+			#one-hot encoding
 			expected = [0 for i in range(n_outputs)]
 			expected[row[-1]] = 1
-			sum_error += sum([(expected[i]-outputs[i])**2 for i in range(len(expected))])
+			#calculate sum of squared errors
+			sum_squared_error += sum([(expected[i]-outputs[i])**2 for i in range(len(expected))])
+			#backpropagate error + update weights
 			backward_propagate_error(network, expected)
 			update_weights(network, row, l_rate)
-		print('epoch = %d, lrate = %.3f, error = %.3f' % (epoch, l_rate, sum_error))
+		print('epoch = %d, lrate = %.3f, error = %.3f' % (epoch, l_rate, sum_squared_error))
+		# sum_squared_error = round(sum_squared_error,4)
+		# ic(epoch,l_rate,sum_squared_error)
 
 # Test training backprop algorithm
 seed(1)
@@ -138,10 +144,15 @@ dataset = [[2.7810836,2.550537003,0],
 	[6.922596716,1.77106367,1],
 	[8.675418651,-0.242068655,1],
 	[7.673756466,3.508563011,1]]
+
+#number of inputs = row - output
 n_inputs = len(dataset[0]) - 1
-n_outputs = len(set([row[-1] for row in dataset]))
+#number of unique output values with set {}
+n_outputs = len({row[-1] for row in dataset}) 
+
 network = initialize_network(n_inputs, 2, n_outputs)
-train_network(network, dataset, 0.5, 20, n_outputs)
+train_network(network = network, train = dataset, l_rate = 0.5, n_epoch = 20, n_outputs = n_outputs)
+
 for layer in network:
 	ic(layer)
 
@@ -150,8 +161,7 @@ def predict(network, row):
 	outputs = forward_propagate(network, row)
 	return outputs.index(max(outputs))
 
-# Test making predictions with the network
-
+# Test making predictions with the pre-trained, hardcoded network
 network = [[{'weights': [-1.482313569067226, 1.8308790073202204, 1.078381922048799]}, {'weights': [0.23244990332399884, 0.3621998343835864, 0.40289821191094327]}],
 	[{'weights': [2.5001872433501404, 0.7887233511355132, -1.1026649757805829]}, {'weights': [-2.429350576245497, 0.8357651039198697, 1.0699217181280656]}]]
 for row in dataset:
@@ -251,7 +261,7 @@ def evaluate_algorithm(dataset, algorithm, n_folds, *args):
 	return scores
 
 
-# Train a network for a fixed number of epochs
+# Train a network for a fixed number of epochs 2
 def train_network(network, train, l_rate, n_epoch, n_outputs):
 	for epoch in range(n_epoch):
 		for row in train:
