@@ -29,6 +29,7 @@ for donut in range(DATA_SIZE):
     carbs = np.random.choice(np.arange(10,15), p = hd2) 
     calories = np.random.choice(np.arange(10,15), p = hd3) 
 
+    print([fat,sugar,protein,carbs,calories,'donut'],',')
     X_train.append([fat,sugar,protein,carbs,calories])
     y_train.append(0)
 
@@ -40,6 +41,7 @@ for bagel in range(DATA_SIZE):
     carbs = np.random.choice(np.arange(10,15), p = hd3) 
     calories = np.random.choice(np.arange(10,15), p = hd2) 
 
+    print([fat,sugar,protein,carbs,calories,'bagel'],',')
     X_train.append([fat,sugar,protein,carbs,calories])
     y_train.append(1)
 
