@@ -9,9 +9,6 @@ import os
 # Load a CSV file raw
 def load_csv_raw(filename):
 	file = open(filename, 'r')
-	print(type(file),type(csv.reader(file)))
-	# print(type(file),type(csv.reader(file)),type(file.read()))
-
 	return list(csv.reader(file))
 
 # Load + process CSV file
@@ -34,9 +31,29 @@ def str_column_to_int(dataset, column):
     labels = {}
     for i,value in enumerate(unique):
         labels[value] = i
+    print(labels)
     for row in dataset:
         row[column] = labels[row[column]]
 
+# Delete column in dataset
+def delete_column(dataset,column):
+	for row in dataset:
+		del row[column]
+
+# Delete multiple columns in dataset
+def delete_columns(dataset,*columns):
+    for row in dataset:
+        for i, column in enumerate(columns):
+            del row[column - i]
+
+# Delete row in dataset
+def delete_row(dataset,row):
+	del dataset[row]
+
+# Delete rows with null values
+def delete_null(dataset):
+	dataset[:] = [row for row in dataset if all(row)]			
+	
 # Find the min and max values for each column
 def dataset_minmax(dataset):
 	stats = [[min(column), max(column)] for column in zip(*dataset)]
@@ -53,6 +70,8 @@ def cross_validation_split(dataset, n_folds):
 	dataset_split = []
 	dataset_copy = dataset.copy()
 	fold_size = int(len(dataset) / n_folds)
+	print('fold size =',fold_size)
+	print(n_folds,'folds')
 	for i in range(n_folds):
 		fold = []
 		while len(fold) < fold_size:
@@ -61,6 +80,8 @@ def cross_validation_split(dataset, n_folds):
 		dataset_split.append(fold)
 	return dataset_split
 
+
+#=================================================================
 
 
 # Initialize a network
@@ -139,23 +160,16 @@ def train_network(network, train, l_rate, n_epoch, n_outputs):
 			error += sum([(expected[i]-outputs[i])**2 for i in range(len(expected))])
 			backward_propagate_error(network, expected)
 			update_weights(network, row, l_rate)
-		if epoch == 0 or (epoch + 1) % 100 == 0:
-			space = ' ' * (3 - len(str(epoch)))
-			print('epoch = {} {} error = {}'.format(epoch,space,round(error,4)))
-	print()
-
-# Make a prediction with a network
-def predict(network, row):
-	outputs = forward_propagate(network, row)
-	return outputs.index(max(outputs))
-
-# Calculate accuracy percentage
-def accuracy_metric(actual, predicted):
-	correct = 0
-	for i in range(len(actual)):
-		if actual[i] == predicted[i]:
-			correct += 1
-	return correct / float(len(actual)) * 100.0
+		if epoch == 0 or (epoch + 1) % 100 == 0: 
+			print(str(epoch).rjust(3,'0'), str(round(error,4)).ljust(7,'0'),str(round(error/len(train),4)))
+	print()	
+		
+# Backpropagation Algorithm With Stochastic Gradient Descent
+def back_propagation(train, test, l_rate, n_epoch, n_hidden):
+	n_inputs, n_outputs = len(train[0]) - 1, len({row[-1] for row in train})
+	network = initialize_network(n_inputs, n_hidden, n_outputs)
+	train_network(network, train, l_rate, n_epoch, n_outputs)
+	return network
 
 # Evaluate an algorithm using a k-fold cross validation split
 def evaluate_algorithm(dataset, algorithm, n_folds, *args):
@@ -179,27 +193,46 @@ def evaluate_algorithm(dataset, algorithm, n_folds, *args):
 	accuracy_scores = [round(score,5) for score in accuracy_scores]
 	return accuracy_scores
 
-# Backpropagation Algorithm With Stochastic Gradient Descent
-def back_propagation(train, test, l_rate, n_epoch, n_hidden):
-	n_inputs = len(train[0]) - 1
-	n_outputs = len({row[-1] for row in train})
-	network = initialize_network(n_inputs, n_hidden, n_outputs)
-	train_network(network, train, l_rate, n_epoch, n_outputs)
-	return network
+# Make a prediction with a network
+def predict(network, row):
+	outputs = forward_propagate(network, row)
+	return outputs.index(max(outputs))
 
-random.seed(1)
-# load and prepare data
-filename = os.path.dirname(__file__) + '/donut_bagel.csv'
-dataset = load_csv_raw(filename)
+# Calculate accuracy percentage
+def accuracy_metric(actual, predicted):
+	correct = 0
+	for i in range(len(actual)):
+		if actual[i] == predicted[i]:
+			correct += 1
+	return correct / float(len(actual)) * 100.0
 
-#convert input columns to floats
-for i in range(len(dataset[0])-1):
-	str_column_to_float(dataset, i)
-# convert class column to integers
+#=================================================================
+
+
+# load CSV file data
+filename = os.path.dirname(__file__) + '/heart.csv'
+dataset = load_csv(filename)
+
+print('\nlen(dataset) =', len(dataset))
+
+delete_null(dataset)
+delete_row(dataset,0)
+
+dataset = dataset[:int(1 * len(dataset))]
+random.shuffle(dataset)
+
+for i in range(len(dataset[0])):
+	try: str_column_to_float(dataset, i)
+	except: str_column_to_int(dataset, i)
+
 str_column_to_int(dataset, len(dataset[0])-1)
-# normalize input variables
+
 minmax = dataset_minmax(dataset)
 normalize_dataset(dataset, minmax)
+
+
+#=================================================================
+
 
 # evaluate algorithm w/ k-fold cross validation
 n_folds = 3
@@ -210,33 +243,35 @@ scores = evaluate_algorithm(dataset, back_propagation, n_folds, l_rate, n_epoch,
 print('Scores: {}'.format(scores))
 print('Mean Accuracy: {}'.format(round(sum(scores)/len(scores),4)))
 
-# create test + train dataset
-random.shuffle(dataset)
+print()
 
-train = dataset[int(0.8 * len(dataset)):]
-test = dataset[:-int(0.2 * len(dataset))]
+#=================================================================
 
-# manual evalution - train and test set
-# predictions = back_propagation(train,test,0.3,500,5)
-network = back_propagation(train,test,0.3,500,5)
+
+#evaluate algorithm w/ train + test dataset
+train = dataset[:int(0.8 * len(dataset))]
+test = dataset[int(0.8 * len(dataset)):]
+
+#initialize and train network
+n_inputs, n_outputs = len(train[0]) - 1, len({row[-1] for row in train})
+network = initialize_network(n_inputs, n_hidden, n_outputs)
+train_network(network, train, l_rate, n_epoch, n_outputs)
+
+#evaluate network accuracy
 predictions = [predict(network,row) for row in test]
 actual = [row[-1] for row in test]
 
 evaluation = accuracy_metric(actual, predictions)
-print(evaluation)
-print(predictions[:30])
+print('manual evaluation = {}'.format(round(evaluation,4)),'\n')
 print(actual[:30])
+print(predictions[:30])
 
-print(network)
+#=================================================================
 
-# train and evaluate network
-n_inputs = len(train[0]) - 1
-n_outputs = len({row[-1] for row in train})
-network = initialize_network(n_inputs, n_hidden, n_outputs)
-train_network(network, train, l_rate, n_epoch, n_outputs)
-
-for row in test:
-	inputs = row[:-1]
-	print(row[-1], predict(network,inputs))
-
-
+#visually inspect outputs
+for row in test[:10]:
+	inputs, expected = row[:-1], row[-1]
+	outputs = forward_propagate(network,inputs)
+	outputs = [round(output,5) for output in outputs]
+	prediction = predict(network,inputs)
+	print(outputs, expected, prediction)
