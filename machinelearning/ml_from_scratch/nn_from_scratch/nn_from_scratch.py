@@ -31,7 +31,7 @@ def str_column_to_int(dataset, column):
     labels = {}
     for i,value in enumerate(unique):
         labels[value] = i
-    print(labels)
+    # print(labels)
     for row in dataset:
         row[column] = labels[row[column]]
 
@@ -161,7 +161,7 @@ def train_network(network, train, l_rate, n_epoch, n_outputs):
 			backward_propagate_error(network, expected)
 			update_weights(network, row, l_rate)
 		if epoch == 0 or (epoch + 1) % 100 == 0: 
-			print(str(epoch).rjust(3,'0'), str(round(error,4)).ljust(7,'0'),str(round(error/len(train),4)))
+			print('epoch', str(epoch).rjust(3,'0'), 'error', str(round(error,4)).ljust(7,'0'), 'error/sample', str(round(error/len(train),4)))
 	print()	
 		
 # Backpropagation Algorithm With Stochastic Gradient Descent
@@ -210,10 +210,12 @@ def accuracy_metric(actual, predicted):
 
 
 # load CSV file data
-filename = os.path.dirname(__file__) + '/heart.csv'
+filename_end = '/heart.csv'
+filename = os.path.dirname(__file__) + filename_end
 dataset = load_csv(filename)
 
-print('\nlen(dataset) =', len(dataset))
+print('\ndataset =', filename_end)
+print('len(dataset) =', len(dataset))
 
 delete_null(dataset)
 delete_row(dataset,0)
