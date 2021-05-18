@@ -4,10 +4,7 @@ import csv
 import random
 
 def return_distance(a,b):
-    sum = 0
-    for i in range(len(a)):
-        sum += (a[i]-b[i])**2
-    return math.sqrt(sum)
+    return math.sqrt(sum([(a[i]-b[i])**2 for i in range(len(a))]))
 
 def insert_distances(inputs,dataset):
     for row in dataset:
