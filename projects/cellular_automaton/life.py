@@ -6,13 +6,14 @@ import time
 n = 30
 alives = ['⬜️','🦊','🔥','🌎','🔥', '🌿', '🔥','🔥','❌','🐟','🦠','😂',]
 deads  = ['🟦','🐰','💣','🌑','💦', '💩', '🌲','🌎','⭕️','💦','😂','💀',]
-i = 0
+i = 1
 alive = alives[i]
 dead = deads[i]
 border = deads[i]
 grid = [[0 for x in range(n)] for y in range(n)]
 grid2 = [[dead for x in range(n)] for y in range(n)]
 grid2[0] = grid2[n-1] = [border for x in range(n)]
+
 for y in range(n):
     grid2[y][0] = border
     grid2[y][n-1] = border
@@ -37,11 +38,6 @@ def return_neighbours(x,y):
                 grid[y+1][x+1],grid[y+1][x-1],grid[y-1][x+1],grid[y-1][x-1])
     return neighbour8
 
-# neighbour_tl = (grid[y][x+1],grid[y+1][x],grid[y+1][x+1])
-# neighbour_tr = (grid[y][x-1],grid[y+1][x],grid[y+1][x-1])
-# neighbour_ll = (grid[y][x+1],grid[y-1][x],grid[y-1][x+1])
-# neighbour_lr = (grid[y][x-1],grid[y-1][x],grid[y-1][x-1])
-
 def next_gen():
     born = []
     killed = []
@@ -60,11 +56,6 @@ def next_gen():
             if grid[y][x] == 0:
                 if surrounding_live == 3:
                     born.append([y,x])
-    # print('born:',born)
-    # print('killed:',killed)
-    # print('born:',len(born))
-    # print('killed:',len(killed))
-    # print('overall:',len(born)-len(killed))
     for [y,x] in born:
         grid[y][x] = 1
         grid2[y][x] = alive
@@ -75,8 +66,9 @@ def next_gen():
 
 randomgrid()
 display()
+time.sleep(10)
+
 while True:
-    # if not input():
     display()
     time.sleep(0.1)
     next_gen()

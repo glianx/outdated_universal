@@ -8,11 +8,7 @@ board = [[0 for x in range(3)] for y in range(3)]
 board2 = [["⬜️" for x in range(3)] for y in range(3)]
 
 def drawboard():
-    print(' ', 0,1,2)
-    y = 0
     for row in board2:
-        print(y, end = ' ')
-        y += 1
         for square in row:
             print(square, end = '')
         print()
@@ -28,9 +24,9 @@ def return_win_board():
 
 def update():
     os.system('clear')
+    print()
     drawboard()
     print('winner:', return_win_board())
-    print('x wins:',xwins,'| o wins:',owins)
     if return_win_board() == 1:
         print('🎉 Congratulations! x wins!')
     if return_win_board() == -1:
@@ -50,16 +46,13 @@ drawboard()
 
 minimax_list = []
 
-def randomminimax(minmax, inputs, n):
+def minimax(minmax, inputs, n):
     # min/max of n-sized chunks
     moves = [minmax(inputs[i:i+n]) for i in range(0,len(inputs),n)]
-    move_chunks = [moves[i:i+n+1] for i in range(0, len(moves),n+1)]
-    # print(str(minmax)[-4:-1], len(moves), 'n:', n)
-    # if n >= 6: print(move_chunks)
     minimax_list.append(moves)
     if minmax == min: minmax = max
     elif minmax == max: minmax = min
-    if len(moves) > 1: randomminimax(minmax, moves, n+1)
+    if len(moves) > 1: minimax(minmax, moves, n+1)
 
 def x(li):
     return [li[i] for i in range(len(li)) if i % 2 == 0]
@@ -86,8 +79,8 @@ def return_win(x,o):
         elif o_win_move < x_win_move: return -1
     if (x_win,o_win) == (False,False): return 0
 
-def final_digit_strings(n):
-    strings = []
+def return_ends(n):
+    ends = []
     for a in range(n): 
         for b in range(n): 
             if b == a: continue
@@ -105,17 +98,16 @@ def final_digit_strings(n):
                                     if h in (a,b,c,d,e,f,g): continue   
                                     for i in range(n):
                                         if i in (a,b,c,d,e,f,g,h): continue                   
-                                        strings.append([a,b,c,d,e,f,g,h,i])
-    return strings
+                                        ends.append(return_win(x([a,b,c,d,e,f,g,h,i]),o([a,b,c,d,e,f,g,h,i])))
+    return ends
 
-strings = final_digit_strings(9)
+start1 = time.time()
 
-ends = []
+ends = return_ends(9)
 
-for li in strings: 
-    ends.append(return_win(x(li),o(li)))
+print(time.time()-start1)
 
-randomminimax(min,ends,2)
+minimax(min,ends,2)
 minimax_list.reverse()
 minimax_list.pop(0)
 minimax_list.append(ends)
@@ -124,48 +116,44 @@ minimax_list.append(ends)
 
 # =====================================================
 
-xwins, owins = 0,0 
+# xwins, owins = 0,0 
 
-for game in range(3):
-    board = [[0 for x in range(3)] for y in range(3)]
-    board2 = [["⬜️" for x in range(3)] for y in range(3)]
-    blanks = [0,1,2,3,4,5,6,7,8]
+board = [[0 for x in range(3)] for y in range(3)]
+board2 = [["⬜️" for x in range(3)] for y in range(3)]
+blanks = [0,1,2,3,4,5,6,7,8]
 
-    opos = 1
-    n = 9
-    i = 1
+opos = 1
+n = 9
+i = 1
 
-    while len(blanks) > 0:
-        xy = input('x move: ')
-        x = int(xy[0]) + 3 * int(xy[1])
-        xmove(x)
+while len(blanks) > 0:
+    xy = input('x move: ')
+    x = int(xy[0]) + 3 * int(xy[1])
+    xmove(x)
 
-        if n == 9: xpos = x
-        else: xpos = n * opos + blanks.index(x)
-        blanks.remove(x)
-        n -= 1
+    if n == 9: xpos = x
+    else: xpos = n * opos + blanks.index(x)
+    blanks.remove(x)
+    n -= 1
 
-        if return_win_board() or len(blanks) == 0: break
+    if return_win_board() or len(blanks) == 0: break
 
-        o_range = minimax_list[i][n*xpos:n*xpos+n]
-        # o = blanks[o_range.index(min(o_range))]
-        o = random.choice([blanks[i] for i in range(len(blanks)) if o_range[i] == min(o_range)])
-        omove(o)
+    o_range = minimax_list[i][n*xpos:n*xpos+n]
+    # o = blanks[o_range.index(min(o_range))]
+    o = random.choice([blanks[i] for i in range(len(blanks)) if o_range[i] == min(o_range)])
+    omove(o)
 
-        opos = n * xpos + blanks.index(o)
+    opos = n * xpos + blanks.index(o)
 
-        blanks.remove(o)
-        n -= 1
-        i += 2
+    blanks.remove(o)
+    n -= 1
+    i += 2
 
+    if return_win_board() or len(blanks) == 0: break
+    
 
-        if return_win_board() == 1: xwins += 1
-        if return_win_board() == -1: owins += 1
-        if return_win_board() or len(blanks) == 0: break
-        
-
-    if len(blanks) == 0:
-        print('🤝 Draw!')
+if len(blanks) == 0:
+    print('🤝 Draw!')
 
 
 

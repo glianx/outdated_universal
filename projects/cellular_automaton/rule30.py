@@ -6,7 +6,7 @@
 
 import os
 os.system('clear')
-# 🟥🟧🟨🟩🟦🟪⬛️⬜️🟫
+
 n = 20
 state = [0 for x in range(2*n+1)]
 state[n] = 1
