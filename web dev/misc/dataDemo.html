@@ -2,29 +2,34 @@
 <html>
 <head>
 
+
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Introduction</title>
 
+
    <!-- Compiled and minified CSS -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	
+
 
 </head>
 <body class = "container">
+	
+	
 
       <div class="row">
         
         <div class="input-field col s6">
-          <input placeholder="Enter First Name" id="first_name" type="text" class="validate">
+          <input placeholder="Placeholder" id="first_name" type="text" class="validate">
           <label for="first_name">First Name</label>
         </div>
         
         <div class="input-field col s6">
-          <input placeholder="Enter Last Name" id="last_name" type="text" class="validate">
+          <input id="last_name" type="text" class="validate">
           <label for="last_name">Last Name</label>
         </div>
-
-		<input>
 
         <a id = "submitBTN" class=" col l12 waves-effect waves-light btn">SUBMIT</a>
  
@@ -33,33 +38,44 @@
   <script>
 
   	//APPROACH 1: Parallel Lists
-  	fnames = []
   	lnames = []
+  	fnames = []
+
+  	//APPROACH 2: Dictionary of Lists
+  	names = {}
+
+
+  	//APPRAOCH 3: A list of dictionaries
+  	namesList = []
 
   	const fName = document.getElementById("first_name")
   	const lName = document.getElementById("last_name")
   	const btn = document.getElementById("submitBTN")
 
   	btn.addEventListener("click", (e) => {
-		console.log("TEST")
-		
-		tfName = fName.value;
-		tlName = lName.value;
+  			console.log("TEST")
+  			
+  			//use parallel array structure
+  			tfName = fName.value;
+  			tlName = lName.value;
 
-		fnames.push(tfName)
-		lnames.push(tlName)
+  			fnames.push(tfName)
+  			lnames.push(tlName)
 
-		console.log(fnames)
-		console.log(lnames)
+  			console.log(fnames)
+  			console.log(lnames)
 
-		alert(tfName + ' ' + tlName)
-		if (tfName.length > 3) {
-			alert(tfName.length + ' medium length') 
-		}
-		else {
-			alert(tfName.length + ' short length')
-		}
-		
+  			//use dictionary
+  			d = new Date();
+				time = d.getTime();
+
+				names[time] = [tfName,tlName]
+
+				console.log(names)
+
+				//use a list of dictionaries
+				namesList.push({"first":tfName,"last":tlName})
+				console.log(namesList)
   	})
 
 
@@ -70,5 +86,9 @@
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         
+
+
+	
+
 </body>
 </html>

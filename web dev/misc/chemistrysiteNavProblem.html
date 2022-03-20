@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            
+</head>
+ <body onload = "startTimer()">
+
+	
+  
+  <nav>
+    <div class="nav-wrapper grey lighten-1">
+      
+      <a href="#!" class="brand-logo" style = "padding-left:10px">Logo</a>
+    
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    
+
+        <ul class="right hide-on-med-and-down">
+    				<li><a href="#login_modal" id = "login_nav" class = "modal-trigger">Login</a></li>
+					<li><a href="#new_user_modal" id = "new_user_nav" class = "modal-trigger">New User</a></li>
+					<li><a href="#" id = "logout_nav" style = "display:none">Logout</a></li>
+					<li><a href="#" id = "game_nav" style = "display:none">Game</a></li>
+					<li><a href="#" id = "history_nav" style = "display:none">History</a></li>
+					<li><a href="#" id = "videos_nav" style = "display:none">Videos</a></li>
+				</ul>
+    </div>
+  </nav>
+
+  <ul class="sidenav grey lighten-3" id="mobile-demo">
+   					<li><a href="#login_modal" id = "login_nav_SN" class = "modal-trigger">Login</a></li>
+					<li><a href="#new_user_modal" id = "new_user_nav_SN" class = "modal-trigger">New User</a></li>
+					<li><a href="#" id = "logout_nav" style = "display:none">Logout</a></li>
+					<li><a href="#" id = "game_nav" style = "display:none">Game</a></li>
+					<li><a href="#" id = "history_nav" style = "display:none">History</a></li>
+					<li><a href="#" id = "videos_nav" style = "display:none">Videos</a></li>
+  </ul>
+
+
+
+	<!-- Modal Structure -->
+	<div id="login_modal" class="modal">
+
+		<div class="modal-content">
+		
+			<h3>Login</h3>
+
+		
+			<form id="login_form" autocomplete = "off">
+				<div class="input-field">
+					<input type="email" id="user_name" autocomplete="" required />
+					<label for="user_name">User Name</label>
+				</div>
+				<div class="input-field">
+					<input type="password" id="user_password" autocomplete="" required />
+					<label for="user_password">Password</label>
+				</div>
+				
+				<button class="btn grey lighten-1 z-depth-0">Login</button>
+			</form>
+
+
+		</div>
+	</div>
+
+	<div id="new_user_modal" class="modal">
+
+		<div class="modal-content">
+		
+			<h3>Welcome</h3>
+
+			<form id="new_user_form" autocomplete = "off">
+				
+				<div class="input-field">
+					<input type="email" id="user_name" autocomplete="" required />
+					<label for="user_name">User Name</label>
+				</div>
+
+				<div class="input-field">
+					<input type="password" id="user_password" autocomplete="" required />
+					<label for="user_password">Password</label>
+				</div>
+
+				<div class="input-field">
+					<input type="password" id="user_password_c" autocomplete="" required />
+					<label for="user_password_c">Password</label>
+				</div>
+
+
+			
+				
+				<button class="btn grey lighten-1 z-depth-0">Create New Account</button>
+			</form>
+
+
+		</div>
+	</div>
+
+
+	<div id = "landing" class = "container">
+		<br>
+		<div class = "row">	
+			<div class = "col l6 m12 valign-wrapper">
+				<div>
+					<p>
+						Chemistry is fundamental to our world. One might say that you are a giant chemical factory. The advances in chemistry are remarkable, allowing new technologies and opportunities. However, chemistry applications have increasing impacts on our environment and health. Therefore, chemistry is essential in the modern world as it gives a deeper understanding of how things work and will help inform our choices. 
+					</p> 
+
+					<h5>But what about the stories?</h5>
+
+					<p>
+						The stories of discovery give a window into past cultures and people. Have you ever wondered who discovered the elements? Who gets credit for the discovery and why? What are the stories that go along with the findings? For example, did you know phosphorus was found when an alchemist was trying to find the philosopher's stone, a substance that could transmute metal into gold? The process involved buckets of urine, which is also yellow. 
+
+						We hope that you will start to explore chemistry and the stories of discovery from across multiple cultures with this site. Have an account to share with me. Please include it in the below form. 
+					</p>
+
+					<div class = "center">
+					<a class="waves-effect waves-light btn-large grey lighten-1"><i class="material-icons left">share</i>button</a>
+					</div>
+				</div>
+
+
+			</div>
+
+			<div class = "col l6 m12">
+
+				<div id = "landing_images" class = "center">
+					<img id = "element_img" class="responsive-img" src="images/1_Hydrogen.jpg">
+		        </div>
+
+	    	</div>
+
+
+	    </div>
+	</div>
+	<div id = "game" class = "container" style = "display: none">
+		<h1>Game</h1>
+
+	</div>
+	<div id = "history" class = "container" style = "display: none">
+		<h1>History</h1>
+
+	</div>
+
+	<div id = "videos" class = "container" style = "display: none">
+		<h1>Videos</h1>
+
+	</div>
+
+
+
+
+
+
+
+  	<!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+
+
+    	users = ["user1@user.com","user2@user.com","user3@user.com"]
+    	passwords = ["u1","u2","u3"]
+
+    	//stores current user and the index in the list
+    	//we have to modify the login process now to store the current user and index. 
+    	cuser = ""
+    	cuserindex = -1
+
+
+		
+		const login_form = document.querySelector("#login_form")
+		const new_user_form = document.querySelector("#new_user_form")
+
+		const login_nav = document.getElementById("login_nav")
+		const logout_nav = document.getElementById("logout_nav")
+		const game_nav = document.getElementById("game_nav")
+		const history_nav = document.getElementById("history_nav")
+		const video_nav = document.getElementById("videos_nav")
+		const title_nav = document.getElementById("title_nav")
+
+		const landing_content = document.getElementById("landing")
+		const element_img = document.getElementById("element_img")
+
+		const game_content = document.getElementById("game")
+		const history_content = document.getElementById("history")
+		const videos_content = document.getElementById("videos")
+		
+		document.addEventListener('DOMContentLoaded', function() {
+			//console.log("LOADED")
+
+			options = {};
+
+
+			var elems = document.querySelectorAll('.modal');
+			var instances = M.Modal.init(elems, options);
+
+
+		    options = {}
+		    var elems = document.querySelectorAll('.sidenav');
+		    var instances = M.Sidenav.init(elems, options);
+		  
+		});
+		
+
+		//SUBMIT EVENTS
+		new_user_form.addEventListener("submit", (e) => {
+
+		
+			e.preventDefault()
+			email = new_user_form["user_name"]
+
+			pw = new_user_form["user_password"]
+
+			pwc = new_user_form["user_password_c"]
+
+			console.log(email)
+
+			console.log(pw)
+			
+			console.log(pwc)
+			
+
+			//LOGIC NEEDED
+			//Step 1 (IF): Confirm passwords match
+
+				//Step 2 (LOOP):
+				// Loop through users to ensure that email is not already in list
+
+			//STEP 3 (IF): 
+			//	Add user to list if the user is valid or prompt user with appropriate 
+			//	error message
+
+
+
+
+
+			var singleModalElem = document.querySelector('#new_user_modal');
+
+			var instance = M.Modal.getInstance(singleModalElem); 
+			instance.close(); 
+		});
+
+		login_form.addEventListener("submit", (e) => {
+
+
+			e.preventDefault();
+
+			//STEP 1: We want to access the fields in the modal
+			email = login_form["user_name"].value //stores the inputted email
+			password = login_form["user_password"].value //stores the inputted password
+
+			// clear the fields.
+			login_form["user_name"].value = ""
+			login_form["user_password"].value = ""
+
+			
+			valid = false; //assume invalid credentials	
+
+
+			//STEP 2: We want to check if it is a valid user name and password
+
+			/*
+			This loop looks different than python, but it is the same 
+			idea, but much nicer to use.  This is because it does not 
+			assume the count check and chnage  
+			
+			for (count; check; change)
+			*/
+
+			for (i = 0; i < users.length; i = i + 1) {
+
+				if (users[i] === email && passwords[i] === password) {
+					valid = true;
+					cuser = email;
+					cuserindex = i;
+					break;
+				}
+				
+
+				
+
+			}
+
+
+			//Step 3: 
+			//	If valid - update page 
+			//	If not valid - notify user.
+			if (valid === true) {
+				//alert("YOUR IN");
+
+				video_nav.style.display = "block"
+				game_nav.style.display = "block"
+				history_nav.style.display = "block"
+				logout_nav.style.display = "block"
+
+
+				login_nav.style.display = "none"
+				//new_user_nav.style.display = "none"
+
+
+
+
+
+			}
+			else {
+				//alert("Invalid Credentials")
+			}
+		
+			var singleModalElem = document.querySelector('#login_modal');
+			var instance = M.Modal.getInstance(singleModalElem); 
+			instance.close(); 
+		});
+
+		//NAV BAR CLICK EVENTS
+		game_nav.addEventListener("click",(e) => {
+		
+			landing_content.style.display = "none"
+			videos_content.style.display = "none"
+			history_content.style.display = "none"
+
+			game_content.style.display = "block"
+		});
+
+		history_nav.addEventListener("click", (e) => {
+
+
+			landing_content.style.display = "none"
+			videos_content.style.display = "none"
+			game_content.style.display = "none"
+		
+
+			history_content.style.display = "block"
+		});
+
+		video_nav.addEventListener("click", (e) => {
+
+
+			landing_content.style.display = "none"
+			history_content.style.display = "none"
+			game_content.style.display = "none"
+		
+
+			videos_content.style.display = "block"
+		});
+		
+		logout_nav.addEventListener("click",(e) => {
+
+				//Update nav bar
+				video_nav.style.display = "none"
+				game_nav.style.display = "none"
+				history_nav.style.display = "none"
+				logout_nav.style.display = "none"
+
+
+				login_nav.style.display = "block"
+
+				//Change current user
+				cuser = ""
+				cuserindex = -1		
+
+				//Return to landing
+				history_content.style.display = "none"
+				game_content.style.display = "none"
+				videos_content.style.display = "none"
+
+				
+				landing_content.style.display = "block"
+
+		});
+
+		/*
+		//Removed this since there is no longer a headbar
+		title_nav.addEventListener("click", (e) => {
+
+			videos_content.style.display = "block"
+			history_content.style.display = "none"
+			game_content.style.display = "none"
+		
+
+			landing_content.style.display = "block"
+		});
+		*/
+
+		//cycling through images
+		images = ["1_Hydrogen","2_Helium","3_Lithium","4_Beryllium","5_Boron","6_Carbon","7_Nitrogen","8_Oxygen","9_Fluorine","10_Neon","11_Sodium","12_Magnesium","13_Aluminum","14_Silicon","15_Phosphorus","16_Sulfur","17_Chlorine","18_Argon","19_Potassium","20_Calcium","21_Scandium","22_Titanium","23_Vanadium","24_Chromium","25_Manganese","26_Iron","27_Cobalt","28_Nickel","29_Copper","30_Zinc","31_Gallium","32_Germanium","33_Arsenic","34_Selenium","35_Bromine","36_Krypton","37_Rubidium","38_Strontium","39_Yttrium","40_Zirconium"];
+
+		function displayNextImage() {
+			console.log("test")
+			randval = Math.floor(Math.random() * images.length);
+			console.log(images[randval])
+			element_img.src = "images/"+images[randval]+".jpg"
+
+			console.log(randval)
+
+		}
+		function startTimer() {
+              setInterval(displayNextImage, 3000);
+        }
+		
+
+
+    </script>
+
+
+  
+</body>
+</html>

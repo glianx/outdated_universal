@@ -1,8 +1,8 @@
 import os
 import time
 
-def render():
-    os.system('clear')
+def render(c):
+    # os.system('clear')
     for facerow in [[-1,0],[1,2,3,4],[-1,5]]:
         for row in [[0,1,2],[7,8,3],[6,5,4]]:
             for face in facerow:
@@ -10,107 +10,113 @@ def render():
                     print(colrs[c[face][sticker]],end = '')
             print()
 
-def rotate(f):
+def rotate(c,f):
     c[f][0:8] = c[f][6:8] + c[f][0:6]
-def rotate_cc(f):
+def rotate_cc(c,f):
     c[f][0:8] = c[f][2:8] + c[f][0:2]
-def rotate2(f):
+def rotate2(c,f):
     c[f][0:8] = c[f][4:8] + c[f][0:4]
 
-def u():
-    rotate(0)
+def u(c):
+    rotate(c,0)
     c[1][0:3],c[2][0:3],c[3][0:3],c[4][0:3] = c[2][0:3],c[3][0:3],c[4][0:3],c[1][0:3]
-def d():
-    rotate(5)
+def d(c):
+    rotate(c,5)
     c[4][4:7],c[3][4:7],c[2][4:7],c[1][4:7] = c[3][4:7],c[2][4:7],c[1][4:7],c[4][4:7]
-def f():
-    rotate(2)
+def f(c):
+    rotate(c,2)
     c[0][4:7],c[1][2:5],c[5][0:3],[c[3][6],c[3][7],c[3][0]] = c[1][2:5],c[5][0:3],[c[3][6],c[3][7],c[3][0]],c[0][4:7]
-def b():
-    rotate(4)
+def b(c):
+    rotate(c,4)
     c[0][0:3],c[3][2:5],c[5][4:7],[c[1][6],c[1][7],c[1][0]] = c[3][2:5],c[5][4:7],[c[1][6],c[1][7],c[1][0]],c[0][0:3]
-def r():
-    rotate(3)
+def r(c):
+    rotate(c,3)
     c[0][2:5],c[2][2:5],c[5][2:5],[c[4][6],c[4][7],c[4][0]] = c[2][2:5],c[5][2:5],[c[4][6],c[4][7],c[4][0]],c[0][2:5] 
-def l():
-    rotate(1)
+def l(c):
+    rotate(c,1)
     [c[0][6],c[0][7],c[0][0]],c[4][2:5],[c[5][6],c[5][7],c[5][0]],[c[2][6],c[2][7],c[2][0]] \
     = c[4][2:5],[c[5][6],c[5][7],c[5][0]],[c[2][6],c[2][7],c[2][0]],[c[0][6],c[0][7],c[0][0]]
 
-def ui():
-    rotate_cc(0)
+def ui(c):
+    rotate_cc(c,0)
     c[1][0:3],c[2][0:3],c[3][0:3],c[4][0:3] = c[4][0:3],c[1][0:3],c[2][0:3],c[3][0:3]
-def di():
-    rotate_cc(5)
+def di(c):
+    rotate_cc(c,5)
     c[4][4:7],c[3][4:7],c[2][4:7],c[1][4:7] = c[1][4:7],c[4][4:7],c[3][4:7],c[2][4:7]
-def fi():
-    rotate_cc(2)
+def fi(c):
+    rotate_cc(c,2)
     c[0][4:7],c[1][2:5],c[5][0:3],[c[3][6],c[3][7],c[3][0]] = [c[3][6],c[3][7],c[3][0]],c[0][4:7],c[1][2:5],c[5][0:3]
-def bi():
-    rotate_cc(4)
+def bi(c):
+    rotate_cc(c,4)
     c[0][0:3],c[3][2:5],c[5][4:7],[c[1][6],c[1][7],c[1][0]] = [c[1][6],c[1][7],c[1][0]],c[0][0:3],c[3][2:5],c[5][4:7]
-def ri():
-    rotate_cc(3)
+def ri(c):
+    rotate_cc(c,3)
     c[0][2:5],c[2][2:5],c[5][2:5],[c[4][6],c[4][7],c[4][0]] = [c[4][6],c[4][7],c[4][0]],c[0][2:5] ,c[2][2:5],c[5][2:5]
-def li():
-    rotate_cc(1)
+def li(c):
+    rotate_cc(c,1)
     [c[0][6],c[0][7],c[0][0]],c[4][2:5],[c[5][6],c[5][7],c[5][0]],[c[2][6],c[2][7],c[2][0]] \
     = [c[2][6],c[2][7],c[2][0]],[c[0][6],c[0][7],c[0][0]],c[4][2:5],[c[5][6],c[5][7],c[5][0]]
 
-def u2():
-    rotate2(0)
+def u2(c):
+    rotate2(c,0)
     c[1][0:3],c[2][0:3],c[3][0:3],c[4][0:3] = c[3][0:3],c[4][0:3],c[1][0:3],c[2][0:3]
-def d2():
-    rotate2(5)
+def d2(c):
+    rotate2(c,5)
     c[4][4:7],c[3][4:7],c[2][4:7],c[1][4:7] = c[2][4:7],c[1][4:7],c[4][4:7],c[3][4:7]
-def f2():
-    rotate2(2)
+def f2(c):
+    rotate2(c,2)
     c[0][4:7],c[1][2:5],c[5][0:3],[c[3][6],c[3][7],c[3][0]] = c[5][0:3],[c[3][6],c[3][7],c[3][0]],c[0][4:7],c[1][2:5]
-def b2():
-    rotate2(4)
+def b2(c):
+    rotate2(c,4)
     c[0][0:3],c[3][2:5],c[5][4:7],[c[1][6],c[1][7],c[1][0]] = c[5][4:7],[c[1][6],c[1][7],c[1][0]],c[0][0:3],c[3][2:5]
-def r2():
-    rotate2(3)
+def r2(c):
+    rotate2(c,3)
     c[0][2:5],c[2][2:5],c[5][2:5],[c[4][6],c[4][7],c[4][0]] = c[5][2:5],[c[4][6],c[4][7],c[4][0]],c[0][2:5],c[2][2:5]
-def l2():
-    rotate2(1)
+def l2(c):
+    rotate2(c,1)
     [c[0][6],c[0][7],c[0][0]],c[4][2:5],[c[5][6],c[5][7],c[5][0]],[c[2][6],c[2][7],c[2][0]] \
     = [c[5][6],c[5][7],c[5][0]],[c[2][6],c[2][7],c[2][0]],[c[0][6],c[0][7],c[0][0]],c[4][2:5]
     
-def input_moves():
+def input_moves(c):
     while True:
-        render()
+        render(c)
         inp = input()
         if inp == '':
             break
         else:
-            eval(inp + '()')
+            eval(inp + '(c)')
 
-def bfs_queue():
-    Q = [['u'],['d'],['l'],['r'],['f'],['b'],
-         ['ui'],['di'],['li'],['ri'],['fi'],['bi'],
-         ['u2'],['d2'],['l2'],['r2'],['f2'],['b2']]
-    for i in range(6**2):
-        state = Q.pop(0)
-        for move in state:
-            eval(move + '()')
-            render()
-            print(state)
+# def bfs_queue(c):
+#     Q = [['u'],['d'],['l'],['r'],['f'],['b'],
+#          ['ui'],['di'],['li'],['ri'],['fi'],['bi'],
+#          ['u2'],['d2'],['l2'],['r2'],['f2'],['b2']]
+#     for i in range(6**2):
+#         c1 = c.copy()
+#         print(c1)
 
-        for next_move in moves:
-            Q.append(state + next_move)
-    print(Q)
+#         moves = Q.pop(0)
+#         for move in moves:
+#             eval(move + '(c1)')
+#         render(c1)
+#         print(moves)
+
+#         for next_move in p_moves:
+#             Q.append(moves + next_move)
+#     print(Q)
     
 colr_ints = [0,1,2,3,4,5,6]
 colrs = ['🟨','🟧','🟦','🟥','🟩','⬜️','  ']
 c = [[colr for sticker in range(9)] for colr in colr_ints]
+c2 = c.copy()
 
-input_moves()
-
-moves = [['u'],['d'],['l'],['r'],['f'],['b'],
+p_moves = [['u'],['d'],['l'],['r'],['f'],['b'],
          ['ui'],['di'],['li'],['ri'],['fi'],['bi'],
          ['u2'],['d2'],['l2'],['r2'],['f2'],['b2']]
 
-start = time.time()
-bfs_queue()
-print(time.time() - start)
+input_moves(c)
+render(c2)
+print(c)
+print(c2)
+# print(c2)
+# input scrambled cube
+# bfs_queue(c)

@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		
+
+	</title>
+
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+ 
+ 	<div class = "container">
+		
+		<div class = "row" id = "cardDisplay">
+		</div>
+	</div>
+</head>
+<body>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+ 
+ 	<script>
+ 	
+ 	//Works the same as previous case, but now a function 
+ 	//creates a card and returns it with the program can use. 
+ 	//This is nice because you can now use parameters to modify the
+ 	//card contents. 
+ 	function createCard() {
+ 		const card = `
+ 				<div class="col s12 m6">
+					<div class="card blue-grey darken-1">
+						<div class="card-content white-text">
+							<span class="card-title">Card Title</span>
+							<p>I am a very simple card. I am good at containing small bits of information.
+							I am convenient because I require little markup to use effectively.</p>
+						</div>
+					<div class="card-action">
+				
+						<a href="#">This is a link</a>
+						<a href="#">This is a link</a>
+				
+					</div>
+				</div>
+				</div>
+            `;
+
+            return card
+
+ 	}
+
+
+    const cd = document.getElementById("cardDisplay")
+
+
+    console.log(cd)
+    
+    //creates an extra div in the structure
+    //Suggestion: Remove the div for the col in the 
+    //const then embed in that.  It will require you set the
+    //class name. 
+    newDiv = document.createElement("div")
+    newDiv.innerHTML = createCard();
+    cd.innerHTML = createCard() + createCard();
+    cd.appendChild(newDiv)
+
+
+
+    </script>
+
+</body>
+</html>
+  

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <title>Pie Chart</title>
+        <style>
+            #pieCharts
+            {
+                width:100%;
+            }
+        </style>
+    <body>
+        <h1>Pie Chart - Human Body Components</h1>
+        <table id="pieCharts">
+            <tr>
+                <td width="50%"><canvas id="chart1"></canvas></td>
+                <td width="50%"><canvas id="chart2"></canvas></td>
+            </tr>
+        </table>
+
+        <script type="text/javascript">
+            xValues = ["Muscle Tissue", "Essential Fat","Non-Essential Fat", "Bone", "Other"];
+            yValuesMale = [45,3,12,15,25];
+            yValuesFemale = [36,12,15,12,25];
+            sliceColoursMale = ["blue","green","yellow","brown","black"];
+            sliceColoursFemale = ["red","purple","orange","lightgreen","black"];
+
+            new Chart("chart1", 
+            {
+                type: "pie",
+                data: 
+                {
+                    labels: xValues,
+                    datasets: 
+                    [{
+                        backgroundColor: sliceColoursMale,
+                        data: yValuesMale
+                    }]
+                },
+                options: 
+                {
+                    title: 
+                    {
+                        display: true,
+                        text: "Male"
+                    }
+                }
+            });
+            new Chart("chart2", 
+            {
+                type: "pie",
+                data: 
+                {
+                    labels: xValues,
+                    datasets: 
+                    [{
+                        backgroundColor: sliceColoursFemale,
+                        data: yValuesFemale,
+                        borderColor: "black"
+                    }]
+                },
+                options: 
+                {
+                    legend: 
+                    {
+                        display: true,
+                        position: "bottom"
+                    },                    
+                    title: 
+                    {
+                        display: true,
+                        text: "Female"
+                    }
+                }
+            });
+        </script>
+
+    </body>
+</html>
+
+
