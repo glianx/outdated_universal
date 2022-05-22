@@ -1,4 +1,4 @@
-// clang++ -Wall -std=c++11 bfs_oop.cpp -o bfs_oop hh
+// clang++ -Wall -std=c++11 bfs_oop.cpp -o bfs_oop
 #include <iostream>
 #include <queue>
 
