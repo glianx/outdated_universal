@@ -1,0 +1,21 @@
+x l2 d2 li ui l d2 li u li
+xi l2 d2 l u li d2 l ui l
+xi li u l di li ui l d li ui l di li u l d
+ri ui fi r u ri ui ri f r2 ui ri ui r u ri u r
+r2 u ri u ri ui r ui r2 ui d ri u r di
+ri ui r u di r2 u ri u r ui r ui r2 d
+r2 ui r ui r u ri u r2 u di r ui ri d
+r u ri ui d r2 ui r ui ri u ri u r2 di
+m2 u m2 u2 m2 u m2
+x r2 f r fi r u2 ri u r u2
+r u ri fi r u ri ui ri f r2 ui ri
+r u ri u r u ri fi r u ri ui ri f r2 ui ri u2 r ui ri
+ri u r ui ri fi ui f r u ri f ri fi r ui r
+r ui ri ui r u r d ri ui r di ri u2 ri
+r2 f r u r ui ri fi r u2 ri u2 r
+r u ri ui ri f r2 ui ri ui r u ri fi
+m2 u m u2 mi u m2
+m2 ui m u2 mi ui m2
+ri u ri ui y ri fi r2 ui ri u ri f r f
+f r ui ri ui r u ri fi r u ri ui ri f r fi
+mi u m2 u m2 u mi u2 m2

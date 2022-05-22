@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <form>
+    <p>Please select your preferred contact method:</p>
+    <div>
+      <input type="radio" id="contactChoice1"
+             name="contact" value="email">
+      <label for="contactChoice1">Email</label>
+      <input type="radio" id="contactChoice2"
+             name="contact" value="phone">
+      <label for="contactChoice2">Phone</label>
+      <input type="radio" id="contactChoice3"
+             name="contact" value="mail">
+      <label for="contactChoice3">Mail</label>
+    </div>
+    <div>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+  <pre id="log">
+  </pre>
+
+  <script>
+      var form = document.querySelector("form");
+var log = document.querySelector("#log");
+
+form.addEventListener("submit", function(event) {
+  var data = new FormData(form);
+  var output = "";
+  for (const entry of data) {
+    output = output + entry[0] + "=" + entry[1] + "\r";
+  };
+  log.innerText = output;
+  event.preventDefault();
+}, false);
+  </script>
+</html>

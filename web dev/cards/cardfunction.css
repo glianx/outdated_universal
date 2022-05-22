@@ -1,0 +1,11 @@
+.my_width {
+    width: 250px;
+}
+.my_height {
+    height: 250px;
+    overflow: hidden;
+}
+.my_padding {
+    padding: 10px;
+}
+

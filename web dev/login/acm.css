@@ -1,0 +1,28 @@
+.custom_padding {
+    padding: 20px;
+}
+.custom_form_header {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 110%;
+    font-weight: 550;
+}
+#math_font {
+    padding: 20px;
+    color: blue;
+    font-family:verdana;
+    text-align:right;
+}
+#title_bar {
+    background-color: #f44336;
+}
+h1,h2,h3,h4,h5,h6 {
+    color: #c62828;
+}
+p,
+label {
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input {
+    margin: .4rem;
+}

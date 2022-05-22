@@ -1,0 +1,24 @@
+Q = moves
+for state in range():
+	if Q == [ ]: break
+	new_c
+	state = Q.pop(0)
+	exec(scramble, prev_state, state)
+	if stage_solved():
+        return prev_state + state
+    for next_move in moves:
+        next_state = state + next_move
+        Q.append(next_state)
+
+moves = [['u'] ,['d'], ['l'], … ['b2']]
+
+ex. 
+state      = ['u','r','l']
+next_state = ['u','r','l','u'],
+             ['u','r','l','d'],
+             ['u','r','l','l'],
+             ['u','r','l','r'],
+             ...
+             ['u','r','l','f2'],
+             ['u','r','l','b2']
+
