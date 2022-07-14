@@ -5,15 +5,15 @@ using namespace std;
 #define N 8
 #define B 3
 
-void bfs(int tree[N][B], int root, int tree_size) {
+void bfs(int tree[N][B], int root, int tree_len) {
     queue<int> q;
     q.push(root);
 
     while (!q.empty()) {
         int v = q.front();
         q.pop();
-        for (int i = 0; i < sizeof(tree[v]) / sizeof(int); i++) {
-            if (v < tree_size and tree[v][i] != 0) {
+        for (int i = 0; i < lenof(tree[v]) / lenof(int); i++) {
+            if (v < tree_len and tree[v][i] != 0) {
                 cout << tree[v][i] << " ";
                 q.push(tree[v][i]);
             }
